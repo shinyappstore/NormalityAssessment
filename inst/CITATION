@@ -1,0 +1,24 @@
+year <- sub("-.*", "", meta$Date)
+version <- paste("R package version", meta$Version)
+url <- "https://CRAN.R-project.org/package=NormalityAssessment"
+
+text_version <- paste0(
+  "Christopher J. Casement and Laura McSweeney (",
+  year,
+  "). NormalityAssessment: A Graphical User Interface for Testing Normality Visually.",
+  version,
+  ".",
+  url
+)
+
+citHeader("To cite NormalityAssessment in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "{NormalityAssessment}: A Graphical User Interface for Testing Normality Visually",
+  author   = personList(as.person("Christopher J. Casement"), as.person("Laura McSweeney")),
+  year     = year,
+  note     = version,
+  url      = url,
+  textVersion = text_version
+)

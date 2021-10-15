@@ -1,0 +1,33 @@
+#' NormalityAssessment: A Graphical User Interface for Testing Normality Visually
+#'
+#' @description The NormalityAssessment package creates plots for assessing
+#'   normality. The methods implemented are based on recent development made in
+#'   graphical inference. In the app, the features in the 'Explore Simulated Data'
+#'   tab enable the user to run the Rorschach procedure, and those in the
+#'   'Include Your Data' tab allow the user to run the line-up procedure.
+#'
+#' @aliases NormalityAssessment-package NormalityAssessment
+#'
+#' @details Package: NormalityAssessment \cr
+#' Type: Package \cr
+#' Version: 0.0.1 \cr
+#' Date: 2021-10-05 \cr
+#' Depends: R (>= 3.5.0) \cr
+#' Imports: shiny, shinyalert, shinyBS, DT, stringi, ggplot2, plyr, dplyr,
+#'   stringr, rio
+#' License: GPL-3 \cr
+#' BugReports: Send an email to \email{casementc@@gmail.com} \cr
+#' Encoding: UTF-8 \cr
+#'
+#' @author
+#' Christopher Casement \cr
+#' Department of Mathematics \cr
+#' Fairfield University \cr
+#' \email{casementc@@gmail.com}
+#'
+#' Laura McSweeney \cr
+#' Department of Mathematics \cr
+#' Fairfield University
+#'
+#' @docType package
+"_PACKAGE"
