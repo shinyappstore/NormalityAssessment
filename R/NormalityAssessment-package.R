@@ -16,7 +16,7 @@
 #' Imports: shiny, shinyalert, shinyBS, DT, stringi, ggplot2, plyr, dplyr,
 #'   stringr, rio
 #' License: GPL-3 \cr
-#' BugReports: Send an email to \email{casementc@@gmail.com} \cr
+#' BugReports: https://github.com/ccasement/NormalityAssessment/issues \cr
 #' Encoding: UTF-8 \cr
 #'
 #' @author
