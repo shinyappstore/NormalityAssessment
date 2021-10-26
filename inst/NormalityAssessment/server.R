@@ -2,7 +2,6 @@
 library(shiny)
 library(shinyalert)
 library(ggplot2); theme_set(theme_grey(20))
-library(plyr)
 library(dplyr)
 library(stringr)
 library(rio)

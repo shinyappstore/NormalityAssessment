@@ -8,6 +8,6 @@
   checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Christopher Casement <casementc@gmail.com>'
   
-  New submission
+  The one NOTE is due to the package being a new submission.
 
 0 errors √ | 0 warnings √ | 1 note x

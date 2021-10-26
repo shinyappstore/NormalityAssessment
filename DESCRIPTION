@@ -2,25 +2,22 @@ Type: Package
 Package: NormalityAssessment
 Title: A Graphical User Interface for Testing Normality Visually
 Version: 0.0.1
-Authors@R:
-  c(
-    person(given = "Christopher", family = "Casement", 
-      email = "casementc@gmail.com", role = c("cre", "aut")
-    ),
-    person(given = "Laura", family = "McSweeney", role = "aut")
+Authors@R: c(
+    person("Christopher", "Casement", , "casementc@gmail.com", role = c("cre", "aut")),
+    person("Laura", "McSweeney", role = "aut")
   )
-Description: Package including an interactive Shiny application for testing 
-    normality visually.
-License: GPL-3
+Description: Package including an interactive Shiny application for
+    testing normality visually.
+License: MIT + file LICENSE
 URL: https://github.com/ccasement/NormalityAssessment,
     https://CRAN.R-project.org/package=NormalityAssessment
 BugReports: https://github.com/ccasement/NormalityAssessment/issues
-Depends: R (>= 3.5.0)
+Depends: 
+    R (>= 3.5.0)
 Imports:
     dplyr (>= 1.0.7),
     DT (>= 0.19),
     ggplot2 (>= 3.3.5),
-    plyr (>= 1.8.6),
     rio (>= 0.5.27),
     shiny (>= 1.7.1),
     shinyalert (>= 2.0.0),

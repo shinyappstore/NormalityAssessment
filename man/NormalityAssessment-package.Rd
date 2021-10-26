@@ -17,14 +17,20 @@ The NormalityAssessment package creates plots for assessing
 Package: NormalityAssessment \cr
 Type: Package \cr
 Version: 0.0.1 \cr
-Date: 2021-10-05 \cr
+Date: 2021-10-19 \cr
 Depends: R (>= 3.5.0) \cr
-Imports: shiny, shinyalert, shinyBS, DT, stringi, ggplot2, plyr, dplyr,
-  stringr, rio
+Imports: dplyr, DT, ggplot2, rio, shiny, shinyalert, shinyBS, stringi,
+stringr
 License: GPL-3 \cr
 BugReports: https://github.com/ccasement/NormalityAssessment/issues \cr
 Encoding: UTF-8 \cr
 }
+\section{Function}{
+ \itemize{
+\item \code{\link{runNormalityAssessmentApp}}
+}
+}
+
 \seealso{
 Useful links:
 \itemize{
