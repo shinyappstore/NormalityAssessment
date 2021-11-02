@@ -13,7 +13,8 @@ There is no return value.
 Runs the NormalityAssessment Shiny application.
 }
 \examples{
-\dontrun{runNormalityAssessmentApp()}
+## only run the app in an interactive R session
+if (interactive()) {runNormalityAssessmentApp()}
 
 }
 \author{

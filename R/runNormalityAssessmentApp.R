@@ -15,7 +15,8 @@
 #' Fairfield University
 #'
 #' @examples
-#' \dontrun{runNormalityAssessmentApp()}
+#' ## only run the app in an interactive R session
+#' if (interactive()) {runNormalityAssessmentApp()}
 #'
 #' @export
 runNormalityAssessmentApp <- function() {
