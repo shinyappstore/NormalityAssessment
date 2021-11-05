@@ -24,7 +24,8 @@ in the articles included in the References section below.
 ## Installation
 
 The `NormalityAssessment` package can be installed from either
-[CRAN](https://cran.r-project.org/) or [GitHub](https://github.com).
+<a href="https://cran.r-project.org/" target="_blank">CRAN</a> or
+<a href="https://github.com" target="_blank">GitHub</a>.
 
 #### Installing from CRAN
 
