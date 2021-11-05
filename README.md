@@ -1,8 +1,9 @@
 
-# NormalityAssessment
+# NormalityAssessment <img src = "man/figures/hex_sticker.png" align = "right" height = 190/>
 
 A graphical user interface for testing normality visually
 
+<!-- start badges -->
 <!-- start badges -->
 
 ![](https://img.shields.io/badge/release-v0.0.1-blue?style=flat) [![CRAN
