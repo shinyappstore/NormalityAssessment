@@ -1,5 +1,5 @@
 
-# NormalityAssessment <img src = "man/figures/hex_sticker.png" align = "right" height = 190/>
+# NormalityAssessment <img src = "inst/NormalityAssessment/www/NormalityAssessment_Sticker_Image.png" align = "right" height = 190/>
 
 A graphical user interface for testing normality visually
 
@@ -61,6 +61,10 @@ F., & Wickham, H. (2009). Statistical inference for exploratory data
 analysis and model diagnostics. Philosophical Transactions of the Royal
 Society of London A: Mathematical, Physical and Engineering Sciences,
 367(1906), 4361-4383.
+
+Majumder, M., Hofmann, H., & Cook, D. (2013). Validation of visual
+statistical inference, applied to linear models. Journal of the American
+Statistical Association, 108(503), 942-956.
 
 Wickham, H., Cook, D., Hofmann, H., & Buja, A. (2010). Graphical
 inference for infovis. IEEE Transactions on Visualization and Computer

@@ -16,12 +16,12 @@ The NormalityAssessment package creates plots for assessing
 \details{
 Package: NormalityAssessment \cr
 Type: Package \cr
-Version: 0.0.1 \cr
-Date: 2021-10-19 \cr
+Version: 0.0.2 \cr
+Date: 2022-02-18 \cr
 Depends: R (>= 3.5.0) \cr
 Imports: dplyr, DT, ggplot2, rio, shiny, shinyalert, shinyBS, stringi,
 stringr
-License: GPL-3 \cr
+License: MIT \cr
 BugReports: https://github.com/ccasement/NormalityAssessment/issues \cr
 Encoding: UTF-8 \cr
 }

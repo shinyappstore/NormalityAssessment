@@ -15,11 +15,6 @@ navbarPage("Normality Assessment",
 
   tabPanel("Home", icon = icon("home"),
 
-    # set up shinyalert -- needs to be inside a tabPanel in this app, otherwise
-    #  will lead to issues
-    useShinyalert(),
-
-
     # remove progress bar for fileInput()
     tags$style(".shiny-file-input-progress {display: none}"),
 
@@ -67,11 +62,6 @@ navbarPage("Normality Assessment",
   ##############################################################################
 
   tabPanel("Explore Simulated Data", icon = icon("bolt"),
-
-    # set up shinyalert -- needs to be inside a tabPanel in this app, otherwise
-    #  will lead to issues
-    useShinyalert(),
-
 
     # tweak style of popup modals
     tags$head(tags$style(HTML(".modal-lg {width: 95%; margin-top: 0.1%}"))),
@@ -788,36 +778,78 @@ navbarPage("Normality Assessment",
   ##############################################################################
   tabPanel("About", icon = icon("info-circle"),
 
-    column(4,
+    column(5,
+
+      h3("The information below will be updated after the completion of the
+        blind-review process for the associated article."
+      ),
+
+      br(),
+
 
       # information about the developers
       h4("Developers"),
-      p("This tool was developed by Chris Casement and Laura McSweeney, both in
-      the Department of Mathematics at Fairfield University."),
+      p("This tool was developed by Anonymous."),
       br(),
 
       # information about the app
       h4("About the App"),
       p("This tool creates normal quantile-quantile (QQ) plots and histograms for
         assessing normality. The methods implemented are based on recent
-        developments made in graphical inference. In the app, the features in the
-        'Explore Simulated Data' tab enable the user to run the Rorschach
-        procedure, and those in the 'Include Your Data' tab allow the user to run
-        the line-up procedure."
+        developments made in graphical inference (see below for more). In the
+        app, the features in the 'Explore Simulated Data' tab enable the user to
+        run the Rorschach procedure, and those in the 'Include Your Data' tab
+        allow the user to run the line-up procedure."
+      ),
+      br(),
+
+      # references
+      h4("References"),
+      p("Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E. K., Swayne, D.
+        F., & Wickham, H. (2009). Statistical inference for exploratory data
+        analysis and model diagnostics. Philosophical Transactions of the Royal
+        Society of London A: Mathematical, Physical and Engineering Sciences,
+        367(1906), 4361-4383."
+      ),
+
+      p("Majumder, M., Hofmann, H., & Cook, D. (2013). Validation of visual
+        statistical inference, applied to linear models. Journal of the American
+        Statistical Association, 108(503), 942-956."
+      ),
+
+      p("Wickham, H., Cook, D., Hofmann, H., & Buja, A. (2010). Graphical
+        inference for infovis. IEEE Transactions on Visualization and Computer
+        Graphics, 16(6), 973-979."
       ),
       br(),
 
       # contact info
       h4("Contact"),
-      p("Email: casementc@gmail.com"),
+      p("Email: Anonymous"),
       br(),
       br(),
 
       # copyright statement
-      p("Copyright \uA9 2019-2021 Christopher J. Casement and Laura McSweeney."),
+      p("Copyright \uA9 2019-2022 Anonymous."),
       p("The license statement can be found",
-        a("here.", href = "https://choosealicense.com/licenses/mit/", target = "_blank")
+        a("here.", href = "https://choosealicense.com/licenses/mit/",
+          target = "_blank"
+        )
       )
+    ),
+
+
+    column(1, ""),
+
+
+    column(4,
+
+      br(),
+      br(),
+      br(),
+      br(),
+
+      img(src = "NormalityAssessment_Sticker_Image.png", height = "300px")
     )
   )
 )
