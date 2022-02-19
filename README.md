@@ -6,7 +6,7 @@ A graphical user interface for testing normality visually
 <!-- start badges -->
 <!-- start badges -->
 
-![](https://img.shields.io/badge/release-v0.0.1-blue?style=flat) [![CRAN
+![](https://img.shields.io/badge/release-v0.0.2-blue?style=flat) [![CRAN
 status](https://www.r-pkg.org/badges/version/NormalityAssessment)](https://CRAN.R-project.org/package=NormalityAssessment)
 <!-- end badges -->
 
