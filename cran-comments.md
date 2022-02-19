@@ -4,10 +4,11 @@
 - R-hub fedora-clang-devel (r-devel)
 
 ## R CMD check results
-> On windows-x86_64-devel (r-devel), ubuntu-gcc-release (r-release), fedora-clang-devel (r-devel)
-  checking CRAN incoming feasibility ... NOTE
-  Maintainer: 'Christopher Casement <casementc@gmail.com>'
-  
-  The one NOTE is due to the package being a new submission.
+> On windows-x86_64-devel (r-devel)
+  checking for detritus in the temp directory ... NOTE
+  Found the following files/directories:
+    'lastMiKTeXException'
+
+  I believe the NOTE is specific to my machine.
 
 0 errors √ | 0 warnings √ | 1 note x
