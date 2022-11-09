@@ -8,12 +8,11 @@ library(stringi)
 
 navbarPage("Normality Assessment",
 
-
   ##############################################################################
   ################################ Home tab panel ##############################
   ##############################################################################
 
-  tabPanel("Home", icon = icon("home"),
+  tabPanel("Home", icon = icon("house"),
 
     # remove progress bar for fileInput()
     tags$style(".shiny-file-input-progress {display: none}"),
@@ -42,12 +41,18 @@ navbarPage("Normality Assessment",
       # <span style = 'text-indent: -36px; padding-left: 36px;'>
 
       HTML("<h3>(2) Continue to the <span style = 'color: green; font-weight: bold;'>
-        Include Your Data</span> tab, if you have your own data."
+        Include Your Data</span> tab, if you have your own* data."
       ),
 
       h3(style = "margin-left: 1.5em;", "The implemented procedure is aimed at
         helping you visually test whether your data plausibly come from a
         normally-distributed population."
+      ),
+
+      br(),
+
+      h4(style = "margin-left: 2em;", '*The app also provides multiple built-in
+        data sets containing real data.'
       )
     ),
 
@@ -71,8 +76,8 @@ navbarPage("Normality Assessment",
     # well panel -- inputs
     column(3,
       div(style = "margin-top: -2em;"),
-      h3(style = "color: red; font-weight: bold;", "Step 1"),
-      p(style = "color: red; font-weight: bold;", "Specify the inputs below, and
+      h3(style = "color: #0073e6; font-weight: bold;", "Step 1"),
+      p(style = "color: #0073e6; font-weight: bold;", "Specify the inputs below, and
         then click the 'Make Plots' button to make a grid of plots."
       ),
 
@@ -209,22 +214,23 @@ navbarPage("Normality Assessment",
     column(9,
       column(6,
         div(style = "margin-top: -2em;"),
-        h3(style = "color: red; font-weight: bold;", "Step 2"),
+        h3(style = "color: #0073e6; font-weight: bold;", "Step 2"),
 
-        p(style = "color: red; font-weight: bold;", "Look for any expected and
-          unexpected characteristics in the plots below. This will help develop a
-          better understanding of the natural variability in data that is
-          randomly generated from a particular distribution."
+        p(style = "color: #0073e6; font-weight: bold;", "Look for any expected
+          and unexpected characteristics in the plots below. This will help you
+          develop a better understanding of the natural variability in data that
+          is randomly generated from a particular distribution."
         )
       ),
 
 
       column(4,
         div(style = "margin-top: -2em;"),
-        h3(style = "color: red; font-weight: bold;", "Step 3 (optional)"),
+        h3(style = "color: #0073e6; font-weight: bold;", "Step 3 (optional)"),
 
-        p(style = "color: red; font-weight: bold;", "If you have your own data to
-          include, continue to the 'Include Your Data' tab."
+        p(style = "color: #0073e6; font-weight: bold;", "If you have your own
+          data to include or want to use a built-in data set, continue to the
+          'Include Your Data' tab."
         )
       ),
 
@@ -276,7 +282,7 @@ navbarPage("Normality Assessment",
 
             column(12,
               sliderInput("hist_bins_rorsch", "Number of Bins", min = 5,
-                max = 50, value = 15, width = "50%"
+                max = 50, value = 10, width = "50%"
               )
             )
           )
@@ -300,7 +306,7 @@ navbarPage("Normality Assessment",
 
           column(4, offset = 8,
             sliderInput("hist_bins_rorsch_both", "Number of Bins", min = 5,
-              max = 50, value = 15, width = "75%"
+              max = 50, value = 10, width = "75%"
             )
           )
         )
@@ -328,29 +334,25 @@ navbarPage("Normality Assessment",
         # well panel -- inputs
         column(3,
           div(style = "margin-top: -2em;"),
-          h3(style = "color: red; font-weight: bold;", "Step 1"),
-          p(style = "color: red; font-weight: bold;", "Upload a data set or
-            manually input your data. If uploading, make sure to click the
-            'Upload Data Set' button."
+          h3(style = "color: #0073e6; font-weight: bold;", "Step 1"),
+          p(style = "color: #0073e6; font-weight: bold;", "Upload a data set,
+            manually input data, or select data included with the app. If
+            uploading data or selecting included data, make sure to click the
+            appropriate button."
           ),
 
           wellPanel(
-            radioButtons("input_type", "Data input method",
-              choices = c("Upload File" = "upload", "Manually" = "manually"),
+            radioButtons("input_type", "Data Input Method",
+              choices = c(
+                "Upload file" = "upload",
+                "Manually input data" = "manually",
+                "Use data included with app" = "app"
+              ),
               selected = "upload"
             ),
 
             tags$hr(),
 
-            conditionalPanel(
-              condition = "input.input_type == 'manually'",
-
-              textAreaInput("user_data", "Either copy and paste a column from a
-                spreadsheet (such as Excel) or type values in the box below,
-                separating each by a comma.",
-                placeholder = "0, 2, 8"
-              )
-            ),
 
             conditionalPanel(
               condition = "input.input_type == 'upload'",
@@ -415,6 +417,57 @@ navbarPage("Normality Assessment",
               ),
 
               br()
+            ),
+
+
+            conditionalPanel(
+              condition = "input.input_type == 'manually'",
+
+              textAreaInput("user_data", "Either copy and paste a column from a
+                spreadsheet (such as Excel) or type values in the box below,
+                separating each by a comma.",
+                placeholder = "0, 2, 8"
+              )
+            ),
+
+
+            conditionalPanel(
+              condition = "input.input_type == 'app'",
+
+              selectInput("app_data", "Select an included variable",
+                choices = c(
+                  "Variable 1" = "data1",
+                  "Variable 2" = "data2",
+                  "Variable 3" = "data3"
+                ),
+
+                selected = "data1"
+              ),
+
+              column(12, align = "center",
+                actionButton("select_data", "Select Variable",
+                  class = "btn btn-primary"
+                ),
+
+                br(),
+                br()
+              ),
+
+              strong("View variable details"),
+
+              br(),
+
+              column(12, align = "center",
+                actionButton("view_var_info", "View Details",
+                  class = "btn btn-success"
+                )
+              ),
+
+              bsModal("var_info_ui", NULL, "view_var_info",
+                size = "large", uiOutput("var_info_ui")
+              ),
+
+              br()
             )
           )
         ),
@@ -442,13 +495,19 @@ navbarPage("Normality Assessment",
             condition = "input.input_type == 'manually'",
 
             tableOutput("table_manual")
+          ),
+
+          conditionalPanel(
+            condition = "input.input_type == 'app'",
+
+            tableOutput("table_app_data")
           )
         ),
 
         column(2,
           div(style = "margin-top: -2em;"),
-          h3(style = "color: red; font-weight: bold;", "Step 2"),
-          p(style = "color: red; font-weight: bold;", "Specify the number of
+          h3(style = "color: #0073e6; font-weight: bold;", "Step 2"),
+          p(style = "color: #0073e6; font-weight: bold;", "Specify the number of
             users."
           ),
 
@@ -461,8 +520,8 @@ navbarPage("Normality Assessment",
 
 
           #div(style = "margin-top: -2em;"),
-          h3(style = "color: red; font-weight: bold;", "Step 3"),
-          p(style = "color: red; font-weight: bold;", "Continue to the 'Make
+          h3(style = "color: #0073e6; font-weight: bold;", "Step 3"),
+          p(style = "color: #0073e6; font-weight: bold;", "Continue to the 'Make
             Plots' tab."
           )
         )
@@ -481,8 +540,8 @@ navbarPage("Normality Assessment",
           # well panel -- inputs
           column(3,
             div(style = "margin-top: -2em;"),
-            h3(style = "color: red; font-weight: bold;", "Step 1"),
-            p(style = "color: red; font-weight: bold;", "Specify the inputs below,
+            h3(style = "color: #0073e6; font-weight: bold;", "Step 1"),
+            p(style = "color: #0073e6; font-weight: bold;", "Specify the inputs below,
               and then click the 'Make Plots' button."
             ),
 
@@ -545,7 +604,7 @@ navbarPage("Normality Assessment",
                   conditionalPanel(
                     condition = "input.n_users_radio == 'one'",
 
-                    h3(style = "color: red; font-weight: bold;", "Step 2 (final
+                    h3(style = "color: #0073e6; font-weight: bold;", "Step 2 (final
                       step)"
                     )
                   ),
@@ -553,11 +612,11 @@ navbarPage("Normality Assessment",
                   conditionalPanel(
                     condition = "input.n_users_radio == 'multiple'",
 
-                    h3(style = "color: red; font-weight: bold;", "Step 2")
+                    h3(style = "color: #0073e6; font-weight: bold;", "Step 2")
                   ),
 
 
-                  p(style = "color: red; font-weight: bold;", "Follow the
+                  p(style = "color: #0073e6; font-weight: bold;", "Follow the
                     instructions below."
                   )
                 ),
@@ -567,8 +626,8 @@ navbarPage("Normality Assessment",
 
                   column(7,
                     div(style = "margin-top: -2em;"),
-                    h3(style = "color: red; font-weight: bold;", "Step 3"),
-                    p(style = "color: red; font-weight: bold;", "Continue to the
+                    h3(style = "color: #0073e6; font-weight: bold;", "Step 3"),
+                    p(style = "color: #0073e6; font-weight: bold;", "Continue to the
                       'Multiple Users (cont.)' tab."
                     )
                   )
@@ -592,12 +651,12 @@ navbarPage("Normality Assessment",
               conditionalPanel(
                 condition = "input.n_users_radio == 'one'",
 
-                h5(style = "color: mediumblue; font-weight: bold;", "\u2012 If you
+                h5(style = "color: green; font-weight: bold;", "\u2012 If you
                   were correct, then it is reasonable to conclude that data did not
                   come from a normally-distributed population."
                 ),
 
-                h5(style = "color: mediumblue; font-weight: bold;", "\u2012 If you
+                h5(style = "color: green; font-weight: bold;", "\u2012 If you
                   were not correct, then it is plausible that data came from a
                   normally-distributed population."
                 )
@@ -638,7 +697,7 @@ navbarPage("Normality Assessment",
 
                   column(12, offset = 1,
                     sliderInput("hist_bins_lineup", "Number of Bins", min = 5,
-                      max = 50, value = 15, width = "50%"
+                      max = 50, value = 10, width = "50%"
                     )
                   )
                 )
@@ -663,7 +722,7 @@ navbarPage("Normality Assessment",
           column(3, p("")),
 
           column(6, align = "center",
-            h3(style = "color: red; font-weight: bold;", "This tab only applies
+            h3(style = "color: #0073e6; font-weight: bold;", "This tab only applies
               when the number of users specified in the 'Input Data and Users'
               tab is set to 'Multiple (others and me).'"
             )
@@ -677,8 +736,8 @@ navbarPage("Normality Assessment",
           # well panel -- inputs
           column(3,
             div(style = "margin-top: -2em;"),
-            h3(style = "color: red; font-weight: bold;", "Step 1"),
-            p(style = "color: red; font-weight: bold;", "Specify the inputs below,
+            h3(style = "color: #0073e6; font-weight: bold;", "Step 1"),
+            p(style = "color: #0073e6; font-weight: bold;", "Specify the inputs below,
               and then click the 'Calculate p-value' button."
             ),
 
@@ -711,8 +770,8 @@ navbarPage("Normality Assessment",
           # output
           column(5,
             div(style = "margin-top: -2em;"),
-            h3(style = "color: red; font-weight: bold;", "Step 2 (final step)"),
-            p(style = "color: red; font-weight: bold;", "Compare the p-value
+            h3(style = "color: #0073e6; font-weight: bold;", "Step 2 (final step)"),
+            p(style = "color: #0073e6; font-weight: bold;", "Compare the p-value
               below to your significance level to determine whether or not the
               data for the selected variable plausibly came from a
               normally-distributed population."
@@ -720,13 +779,13 @@ navbarPage("Normality Assessment",
 
             br(),
 
-            h5(style = "color: mediumblue; font-weight: bold;", "\u2012 If the
+            h5(style = "color: green; font-weight: bold;", "\u2012 If the
               p-value is less than the significance level, then it is reasonable
               to conclude the data did not come from a normally-distributed
               population."
             ),
 
-            h5(style = "color: mediumblue; font-weight: bold;", "\u2012 If the
+            h5(style = "color: green; font-weight: bold;", "\u2012 If the
               p-value is greater than the significance level, then it is
               plausible the data came from a normally-distributed population."
             ),
@@ -776,20 +835,15 @@ navbarPage("Normality Assessment",
   ##############################################################################
   ############################## About tab panel ###############################
   ##############################################################################
-  tabPanel("About", icon = icon("info-circle"),
+  tabPanel("About", icon = icon("circle-info"),
 
     column(5,
 
-      h3("The information below will be updated after the completion of the
-        blind-review process for the associated article."
-      ),
-
-      br(),
-
-
       # information about the developers
       h4("Developers"),
-      p("This tool was developed by Anonymous."),
+      p("This tool was developed by Chris Casement and Laura McSweeney, faculty
+        in the Department of Mathematics at Fairfield University."
+      ),
       br(),
 
       # information about the app
@@ -825,17 +879,21 @@ navbarPage("Normality Assessment",
 
       # contact info
       h4("Contact"),
-      p("Email: Anonymous"),
+      p("Email: casementc@gmail.com"),
       br(),
       br(),
 
       # copyright statement
-      p("Copyright \uA9 2019-2022 Anonymous."),
+      p("Copyright \uA9 2019-2022 Christopher J. Casement and Laura A.
+        McSweeney."
+      ),
       p("The license statement can be found",
         a("here.", href = "https://choosealicense.com/licenses/mit/",
           target = "_blank"
         )
-      )
+      ),
+
+      br()
     ),
 
 

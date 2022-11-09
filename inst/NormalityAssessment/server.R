@@ -5,6 +5,7 @@ library(ggplot2); theme_set(theme_grey(20))
 library(dplyr)
 library(stringr)
 library(rio)
+library(rmatio)  # use rmatio rather than rio when importing .mat (MATLAB) files
 
 
 shinyServer(function(session, input, output){
@@ -339,14 +340,17 @@ shinyServer(function(session, input, output){
       } else if (input$rorsch_plot_type == "rorsch_hist") {
 
         # don't save plot, otherwise number of bins input breaks
-        ggplot(bag$all_data_rorsch, aes(x = Data)) +
+        bag$hist_rorsch <- ggplot(bag$all_data_rorsch, aes(x = Data)) +
           geom_histogram(bins = d_hist_bins_rorsch()) +
           facet_wrap(~ samp) +
           labs(x = "Data Value", y = "Count") +
           theme(strip.text.x = element_text(margin = margin(2, 0, 2, 0)))
+
+        bag$hist_rorsch
       }
     }
   })
+
 
 
   output$rorsch_plot_both_qq <- renderPlot({
@@ -380,13 +384,15 @@ shinyServer(function(session, input, output){
     if (bag$do_rorsch_both != FALSE) {
 
       # don't save plot, otherwise number of bins input breaks
-      ggplot(bag$all_data_rorsch, aes(x = Data)) +
+      bag$both_hist_rorsch <- ggplot(bag$all_data_rorsch, aes(x = Data)) +
         geom_histogram(bins = d_hist_bins_rorsch_both()) +
         facet_wrap(~ samp) +
         labs(x = "Data Value", y = "Count") +
         theme(strip.text.x = element_text(margin = margin(2, 0, 2, 0)),
           aspect.ratio = 1
         )
+
+      bag$both_hist_rorsch
     }
   })
 
@@ -411,82 +417,66 @@ shinyServer(function(session, input, output){
 
   ### make larger Rorschach plots in popup window
   ####################################################
-  observeEvent(input$make_rorsch_popup_single, {
+  output$rorsch_popup_plots_single <- renderPlot({
 
-    # clear output until make plot button clicked again
+    #   # clear output until make plot button clicked again
     if (bag$do_rorsch_single != FALSE) {
 
       if (input$rorsch_plot_type == "rorsch_qq") {
-
-        output$rorsch_popup_plots_single <- renderPlot(bag$qq_rorsch)
-
+        bag$qq_rorsch
       } else if (input$rorsch_plot_type == "rorsch_hist") {
-
-        output$rorsch_popup_plots_single <- renderPlot({
-
-          ggplot(bag$all_data_rorsch, aes(x = Data)) +
-            geom_histogram(bins = d_hist_bins_rorsch()) +
-            facet_wrap(~ samp) +
-            labs(x = "Data Value", y = "Count") +
-            theme(strip.text.x = element_text(margin = margin(2, 0, 2, 0)))
-        })
+        bag$hist_rorsch
       }
-
-
-      output$rorsch_popup_ui_single <- renderUI({
-
-        # need tagList(), not list()
-        tagList(
-          h4(style = "color: green; font-weight: bold; text-align: center;",
-            "After examining the plots below, click the \u2716 in the upper-right
-            hand corner of this popup window to close out of the popup and return
-            to the main part of the app."
-          ),
-
-          plotOutput("rorsch_popup_plots_single", height = 650)
-        )
-      })
     }
   })
 
 
-  observeEvent(input$make_rorsch_popup_both, {
+
+  output$rorsch_popup_ui_single <- renderUI({
+
+    # need tagList(), not list()
+    tagList(
+      h4(style = "color: green; font-weight: bold; text-align: center;",
+        "After examining the plots below, click the \u2716 in the upper-right
+        hand corner of this popup window to close out of the popup and return
+        to the main part of the app."
+      ),
+
+      plotOutput("rorsch_popup_plots_single", height = 650)
+    )
+  })
+
+
+
+  output$rorsch_popup_both_qq <- renderPlot({
 
     # clear output until make plot button clicked again
-    if (bag$do_rorsch_single != FALSE) {
+    if (bag$do_rorsch_both != FALSE) bag$both_qq_rorsch
+  })
 
-      output$rorsch_popup_both_qq <- renderPlot(bag$both_qq_rorsch)
+  output$rorsch_popup_both_hist <- renderPlot({
 
-      output$rorsch_popup_both_hist <- renderPlot({
-
-        # don't save otherwise number of bins input breaks
-        ggplot(bag$all_data_rorsch, aes(x = Data)) +
-          geom_histogram(bins = d_hist_bins_rorsch_both()) +
-          facet_wrap(~ samp) +
-          labs(x = "Data Value", y = "Count") +
-          theme(strip.text.x = element_text(margin = margin(2, 0, 2, 0)),
-            aspect.ratio = 1
-          )
-      })
+    # clear output until make plot button clicked again
+    if (bag$do_rorsch_both != FALSE) bag$both_hist_rorsch
+  })
 
 
-      output$rorsch_popup_ui_both <- renderUI({
 
-        # need tagList(), not list()
-        tagList(
-          h4(style = "color: green; font-weight: bold; text-align: center;",
-            "After examining the plots below, click the \u2716 in the upper-right
-            hand corner of this popup window to close out of the popup and return
-            to the main part of the app."
-          ),
+  output$rorsch_popup_ui_both <- renderUI({
 
-          splitLayout(
-            plotOutput("rorsch_popup_both_qq", height = 650),
-            plotOutput("rorsch_popup_both_hist", height = 650)
-          )
-        )
-      })
-    }
+    # need tagList(), not list()
+    tagList(
+      h4(style = "color: green; font-weight: bold; text-align: center;",
+        "After examining the plots below, click the \u2716 in the upper-right
+        hand corner of this popup window to close out of the popup and return
+        to the main part of the app."
+      ),
+
+      splitLayout(
+        plotOutput("rorsch_popup_both_qq", height = 650),
+        plotOutput("rorsch_popup_both_hist", height = 650)
+      )
+    )
   })
 
 
@@ -614,7 +604,12 @@ shinyServer(function(session, input, output){
         }
       }
 
+    } else if (bag$file_extension == "mat") {
+
+      bag$user_data_df <- as.data.frame(read.mat(input$data_file$datapath))
+
     } else {
+
       bag$user_data_df <- import(input$data_file$datapath)
     }
 
@@ -625,6 +620,61 @@ shinyServer(function(session, input, output){
 
     updateSelectInput(session, "select_var", "Variable of Interest",
       choices = colnames(bag$user_data_df)
+    )
+  })
+
+
+
+  # store selected dataset and update variable names in selectInput box
+  observeEvent(input$select_data, {
+
+    bag$user_data_df <- switch(input$app_data,
+      "data1" = data.frame(Data = lm(faithful[, 2] ~ faithful[, 1])$residuals),
+      "data2" = , data.frame(Data = rock[, 3]),
+      "data3" = data.frame(Data = rock[, 2])
+    )
+  })
+
+
+  # popup window w/ info about variables included in app
+  output$var_info_ui <- renderUI({
+
+    list(
+      fluidRow(
+        column(2, ""),
+        column(8,
+          h2(style = "color: #0073e6; font-weight: bold; text-align: center;",
+            "Information about the Included Variables"
+          ),
+
+
+          h3(style = "color: #0073e6; font-weight: bold;", "Variable 1"),
+          p("Information about the 'faithful' data set can be found
+            by clicking",
+            a("here.",
+              href = "https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/faithful",
+              target = "_blank"
+            ),
+            "In this app, the data are the residuals found when fitting a linear
+            regression model with 'eruptions' as the independent variable and
+            'waiting' as the dependent variable."
+          ),
+
+
+          h3(style = "color: #0073e6; font-weight: bold;", "Variables 2 & 3"),
+          p("Information about the 'rock' data set can be found
+            by clicking",
+            a("here.",
+              href = "https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/rock",
+              target = "_blank"
+            ),
+            "In this app, variable 2 is the variable 'shape,' and variable 3 is
+            the perimeter variable 'peri.'"
+          )
+        ),
+
+        column(2, "")
+      )
     )
   })
 
@@ -651,6 +701,13 @@ shinyServer(function(session, input, output){
 
     (bag$user_data_df <- data.frame(Data = user_data))
   })
+
+
+  output$table_app_data <- renderTable({
+
+    bag$user_data_df
+  })
+
 
 
 
@@ -726,7 +783,7 @@ shinyServer(function(session, input, output){
       } else {
         final_user_data <- data.frame(Data = na.omit(bag$user_data_df[, 1]))
       }
-    } else if (input$input_type == "manually") {
+    } else if (input$input_type %in% c("manually", "app")) {
       final_user_data <- na.omit(bag$user_data_df)
     }
 
@@ -810,11 +867,13 @@ shinyServer(function(session, input, output){
       } else if (input$lineup_plot_type == "lineup_hist") {
 
         # don't save plot, otherwise number of bins input breaks
-        ggplot(bag$all_data_lineup, aes(x = Data)) +
+        bag$hist_lineup <- ggplot(bag$all_data_lineup, aes(x = Data)) +
           geom_histogram(bins = d_hist_bins_lineup()) +
           facet_wrap(~ samp) +
           labs(x = "Data Value", y = "Count") +
           theme(strip.text.x = element_text(margin = margin(2, 0, 2, 0)))
+
+        bag$hist_lineup
       }
     }
   })
@@ -849,45 +908,57 @@ shinyServer(function(session, input, output){
 
   ### make larger line-up plots in popup window
   ####################################################
-  observeEvent(input$make_lineup_popup, {
+  output$lineup_popup_plots <- renderPlot({
 
-    # clear output until make plot button clicked again
-    if (bag$do_lineup != FALSE) {
-
-      if (input$lineup_plot_type == "lineup_qq") {
-
-        output$lineup_popup_plots <- renderPlot(bag$qq_lineup)
-
-      } else if (input$lineup_plot_type == "lineup_hist") {
-
-        output$lineup_popup_plots <- renderPlot({
-
-          # don't save otherwise number of bins input breaks
-          ggplot(bag$all_data_lineup, aes(x = Data)) +
-            geom_histogram(bins = d_hist_bins_lineup()) +  # change back after activity
-            facet_wrap(~ samp) +
-            labs(x = "Data Value", y = "Count") +
-            theme(strip.text.x = element_text(margin = margin(2, 0, 2, 0)))
-        })
-      }
-
-
-      output$lineup_popup_ui <- renderUI({
-
-        # need tagList(), not list()
-        tagList(
-          h4(style = "color: green; font-weight: bold; text-align: center;",
-            "After examining the plots below, click the \u2716 in the upper-right
-            hand corner of this popup window to close out of the popup and return
-            to the main part of the app."
-          ),
-
-          plotOutput("lineup_popup_plots", height = 650)
-        )
-      })
+    if (input$lineup_plot_type == "lineup_qq") {
+      bag$qq_lineup
+    } else if (input$lineup_plot_type == "lineup_hist") {
+      bag$hist_lineup
     }
   })
 
+
+
+
+
+  # observeEvent(input$make_lineup_popup, {
+  #
+  #   # clear output until make plot button clicked again
+  #   if (bag$do_lineup != FALSE) {
+  #
+  #     if (input$lineup_plot_type == "lineup_qq") {
+  #
+  #       output$lineup_popup_plots <- renderPlot(bag$qq_lineup)
+  #
+  #     } else if (input$lineup_plot_type == "lineup_hist") {
+  #
+  #       output$lineup_popup_plots <- renderPlot({
+  #
+  #         # don't save otherwise number of bins input breaks
+  #         ggplot(bag$all_data_lineup, aes(x = Data)) +
+  #           geom_histogram(bins = d_hist_bins_lineup()) +  # change back after activity
+  #           facet_wrap(~ samp) +
+  #           labs(x = "Data Value", y = "Count") +
+  #           theme(strip.text.x = element_text(margin = margin(2, 0, 2, 0)))
+  #       })
+  #     }
+  #   }
+  # })
+
+
+  output$lineup_popup_ui <- renderUI({
+
+    # need tagList(), not list()
+    tagList(
+      h4(style = "color: green; font-weight: bold; text-align: center;",
+        "After examining the plots below, click the \u2716 in the upper-right
+        hand corner of this popup window to close out of the popup and return
+        to the main part of the app."
+      ),
+
+      plotOutput("lineup_popup_plots", height = 650)
+    )
+  })
 
 
 
