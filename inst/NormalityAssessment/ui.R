@@ -884,7 +884,7 @@ navbarPage("Normality Assessment",
       br(),
 
       # copyright statement
-      p("Copyright \uA9 2019-2022 Christopher J. Casement and Laura A.
+      p("Copyright \uA9 2019-2023 by Christopher J. Casement and Laura A.
         McSweeney."
       ),
       p("The license statement can be found",
