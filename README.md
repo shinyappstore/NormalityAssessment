@@ -1,81 +1,9 @@
+![](https://shiny-app-store3.s3.amazonaws.com/approvedapp/s373_kymoNiwaKY4qhSRTOuvOOwAjfIuWgAaJw2k3tutV_logo_275.jpg)
 
-# NormalityAssessment <img src = "inst/NormalityAssessment/www/NormalityAssessment_Sticker_Image.png" align = "right" height = 190/>
 
-A graphical user interface for testing normality visually
 
-<!-- start badges -->
-<!-- start badges -->
+# NormalityAssessment: Interactive Classroom Tool for Testing Normality Visually
 
-![](https://img.shields.io/badge/release-v0.1.0-blue?style=flat) [![CRAN
-status](https://www.r-pkg.org/badges/version/NormalityAssessment)](https://CRAN.R-project.org/package=NormalityAssessment)
-<!-- end badges -->
+#### Use app online: __[www.shinyappstore.com/a/NormalityAssessment](https://shinyappstore.com/a/NormalityAssessment)__
 
-## Description
-
-The `NormalityAssessment` `R` package includes an interactive Shiny
-application, which is run locally on the user’s machine. It enables the
-creation of normal quantile-quantile (QQ) plots and histograms for
-assessing normality. The methods implemented are based on recent
-developments made in graphical inference. In the app, the features in
-the ‘Explore Simulated Data’ tab enable the user to run the Rorschach
-procedure, and those in the ‘Include Your Data’ tab allow the user to
-run the line-up procedure. Details on these two procedures can be found
-in the articles included in the References section below.
-
-## Installation
-
-The `NormalityAssessment` package can be installed from either
-<a href="https://cran.r-project.org/" target="_blank">CRAN</a> or
-<a href="https://github.com" target="_blank">GitHub</a>.
-
-#### Installing from CRAN
-
-To install from CRAN, run the following code in `R`:
-
-``` r
-install.packages("NormalityAssessment")
-```
-
-#### Installing from GitHub
-
-To install the package from GitHub, run the following code in `R`:
-
-``` r
-install.packages("remotes")  # installs the remotes package for accessing the install_github() function
-remotes::install_github("ccasement/NormalityAssessment")  # installs the NormalityAssessment package
-```
-
-## Usage
-
-The `NormalityAssessment` application can be run using a single line of
-code in `R`:
-
-``` r
-NormalityAssessment::runNormalityAssessmentApp()
-```
-
-## References
-
-Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E. K., Swayne, D.
-F., & Wickham, H. (2009). Statistical inference for exploratory data
-analysis and model diagnostics. Philosophical Transactions of the Royal
-Society of London A: Mathematical, Physical and Engineering Sciences,
-367(1906), 4361-4383.
-
-Majumder, M., Hofmann, H., & Cook, D. (2013). Validation of visual
-statistical inference, applied to linear models. Journal of the American
-Statistical Association, 108(503), 942-956.
-
-Wickham, H., Cook, D., Hofmann, H., & Buja, A. (2010). Graphical
-inference for infovis. IEEE Transactions on Visualization and Computer
-Graphics, 16(6), 973-979.
-
-## Bug Reporting
-
-If you happen to find any bugs, we kindly ask that you email us at
-<casementc@gmail.com>.
-
-## License
-
-`NormalityAssessment` is distributed under the MIT license. For details,
-see the LICENSE.md file.
+NormalityAssessment is a versatile tool designed for assessing normality in data through the creation of normal quantile-quantile (QQ) plots and histograms. This application offer users the ability to perform both the Rorschach and line-up procedures for normality assessment. NormalityAssessment allows the import of data sets from various file formats associated with popular software in different disciplines. The tool focuses on normal QQ plots and histograms, essential for checking the normality condition in parametric inferential and predictive methods. NormalityAssessment facilitates a two-stage process, starting with the Rorschach procedure to visualize natural variability in data, followed by the line-up stage where users input their data or choose from included datasets, identifying the normal QQ plot or histogram corresponding to their data from a grid of multiple plots. Casement, C. J, & McSweeney, L. A. (2022). Technology Innovations in Statistics Education, 14(1).
